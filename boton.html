@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recordatorio del profesor</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%; height: 100%;
+    background: transparent;
+    overflow: hidden;
+    pointer-events: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .fab-wrap {
+    position: fixed;
+    right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    pointer-events: none;
+    animation: fabIn .55s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes fabIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Botón: foto + nombre */
+  .fab-pill {
+    pointer-events: auto;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, #16478f 0%, #0e2f63 100%);
+    color: #fff;
+    border: none; border-radius: 999px;
+    padding: 6px 18px 6px 6px;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(10, 30, 70, .35);
+    animation: fabPulse 2.2s ease-out 3;
+    transition: transform .18s ease;
+  }
+  .fab-pill:hover { transform: scale(1.04); }
+  .fab-pill:active { transform: scale(.97); }
+  @keyframes fabPulse {
+    0%   { box-shadow: 0 8px 24px rgba(10,30,70,.35), 0 0 0 0 rgba(35, 95, 190, .55); }
+    70%  { box-shadow: 0 8px 24px rgba(10,30,70,.35), 0 0 0 14px rgba(35, 95, 190, 0); }
+    100% { box-shadow: 0 8px 24px rgba(10,30,70,.35), 0 0 0 0 rgba(35, 95, 190, 0); }
+  }
+  .fab-pill img {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,.9);
+    background: #dbe4f0;
+    flex: none;
+  }
+  .fab-pill span {
+    font-size: 15px; font-weight: 600; letter-spacing: .2px;
+    white-space: nowrap;
+  }
+
+  /* Tarjeta del mensaje */
+  .fab-card {
+    pointer-events: auto;
+    width: 290px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 18px 48px rgba(10, 30, 70, .30);
+    padding: 18px 18px 16px;
+    position: relative;
+    transform-origin: bottom right;
+    transform: scale(.55) translateY(14px);
+    opacity: 0; visibility: hidden;
+    transition: transform .38s cubic-bezier(.22,1,.36,1), opacity .28s ease, visibility 0s .38s;
+  }
+  .fab-card.open {
+    transform: scale(1) translateY(0);
+    opacity: 1; visibility: visible;
+    transition: transform .38s cubic-bezier(.22,1,.36,1), opacity .28s ease, visibility 0s 0s;
+  }
+  .fab-card::after { /* flechita hacia el botón */
+    content: "";
+    position: absolute;
+    right: 34px; bottom: -8px;
+    width: 16px; height: 16px;
+    background: #fff;
+    transform: rotate(45deg);
+    box-shadow: 4px 4px 10px rgba(10,30,70,.12);
+  }
+  .fab-card-title {
+    font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    color: #16478f;
+    margin-bottom: 8px;
+  }
+  .fab-card p {
+    font-size: 14.5px; line-height: 1.55;
+    color: #2b3445;
+  }
+  .fab-card p strong { color: #16478f; }
+  .fab-close {
+    position: absolute;
+    top: 8px; right: 10px;
+    width: 28px; height: 28px;
+    border: none; border-radius: 50%;
+    background: #eef2f8; color: #5b6b85;
+    font-size: 17px; line-height: 1;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .fab-close:hover { background: #dde6f3; }
+
+  @media (max-width: 480px) {
+    .fab-card { width: 76vw; max-width: 300px; }
+    .fab-pill img { width: 42px; height: 42px; }
+    .fab-pill span { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="fab-wrap">
+    <div class="fab-card" id="fabCard" role="dialog" aria-label="Recordatorio">
+      <button class="fab-close" id="fabClose" aria-label="Cerrar">&times;</button>
+      <div class="fab-card-title">Recordatorio</div>
+      <p>Hola, estimado estudiante. Recuerda que debes enviar tu <strong>minuta</strong> antes de la fecha pautada para poder cumplir con la <strong>defensa de la asignación</strong>.</p>
+    </div>
+    <button class="fab-pill" id="fabPill" aria-label="Mensaje del profesor">
+      <img src="profe.png" alt="Prof. Inmer">
+      <span>Prof. Inmer</span>
+    </button>
+  </div>
+<script>
+  (function () {
+    var pill = document.getElementById('fabPill');
+    var card = document.getElementById('fabCard');
+    var closeBtn = document.getElementById('fabClose');
+    pill.addEventListener('click', function () { card.classList.toggle('open'); });
+    closeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      card.classList.remove('open');
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') card.classList.remove('open');
+    });
+  })();
+</script>
+</body>
+</html>
