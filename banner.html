@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: transparent; overflow: hidden; display: flex; justify-content: center; align-items: flex-start; }
+        .canvas {
+        width: 100vw;
+        /* La altura se calcula sola para mantener la proporción 508:283 */
+        height: calc(100vw * (283 / 508));
+        max-width: 508px;
+        max-height: 283px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+    }
+
+    img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+    .curtain {
+        position: absolute;
+        top: 0; left: 0;
+        width: 200%; height: 100%;
+        background: linear-gradient(to right, transparent 0%, transparent 15%, white 25%, white 100%);
+        animation: slide 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        z-index: 2;
+    }
+
+    .shine {
+        position: absolute;
+        top: 0; left: -150%;
+        width: 60%; height: 100%;
+        background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+        transform: skewX(-25deg);
+        animation: light 0.8s ease-in-out 1.5s forwards;
+        z-index: 3;
+    }
+
+    @keyframes slide { 0% { transform: translateX(-35%); } 100% { transform: translateX(100%); } }
+    @keyframes light { 0% { left: -150%; } 100% { left: 150%; } }
+</style>
+</head>
+<body>
+    <div class="canvas">
+        <img src="508px.webp">
+        <div class="curtain"></div>
+        <div class="shine"></div>
+    </div>
+</body>
+</html>
