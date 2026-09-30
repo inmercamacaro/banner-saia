@@ -4,160 +4,117 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Banner Derecho Internacional II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  .di2-banner {
-    position: relative;
-    width: 100%;
-    max-width: 508px;
-    aspect-ratio: 16 / 9;
-    margin: 0 auto;
-    overflow: hidden;
-    border-radius: 15px;
-    background: #0b090a;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:100%; height:100%; background:#0d0b0c; }
+  .stage {
+    position:relative; width:100%; max-width:508px; aspect-ratio:16/9;
+    margin:0 auto; overflow:hidden; border-radius:15px; background:#0d0b0c;
   }
-  .di2-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.15s linear;
+  .bar { position:absolute; top:0; left:0; right:0; height:6px; background:#7a1f2e; z-index:30; }
+  .slide { position:absolute; inset:0; opacity:0; }
+  .slide.on { opacity:1; }
+  .slide img { width:100%; height:100%; object-fit:cover; display:block; }
+  .slide.on img { animation:punch .32s linear forwards; }
+  @keyframes punch { from { transform:scale(1.04); } to { transform:scale(1.13); } }
+  .grade {
+    position:absolute; inset:0; z-index:20; pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.38) 100%);
   }
-  .di2-slide.active { opacity: 1; }
-  .di2-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+  .grain {
+    position:absolute; inset:0; z-index:21; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   }
-  .di2-slide.active img {
-    animation: di2-zoom 1.1s linear forwards;
+  /* ---------- título premium ---------- */
+  .title {
+    position:absolute; inset:0; z-index:25; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; text-align:center; padding:0 28px;
+    background:radial-gradient(ellipse at 50% 42%, #171214 0%, #0d0b0c 72%);
+    opacity:0; transition:opacity .5s ease;
   }
-  @keyframes di2-zoom {
-    from { transform: scale(1.08); }
-    to { transform: scale(1.18); }
+  .title.show { opacity:1; }
+  .eyebrow {
+    font-family:'Inter',system-ui,sans-serif; font-size:10px; font-weight:600;
+    letter-spacing:5px; color:#b99a5e; margin-bottom:16px;
+    opacity:0; transform:translateY(12px);
+    transition:opacity .7s ease .15s, transform .7s cubic-bezier(.22,1,.36,1) .15s;
   }
-  .di2-shade {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
-    pointer-events: none;
+  .title.show .eyebrow { opacity:1; transform:none; }
+  .t-line {
+    font-family:'Playfair Display',Georgia,'Times New Roman',serif;
+    color:#f4efe4; font-weight:700; line-height:1.08;
+    opacity:0; transform:translateY(26px);
   }
-  .di2-bar {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 6px;
-    background: #7a1f2e;
-    z-index: 3;
+  .t-line.l1 { font-size:44px; letter-spacing:6px; transition:opacity .8s ease .3s, transform .8s cubic-bezier(.22,1,.36,1) .3s; }
+  .t-line.l2 { font-size:30px; letter-spacing:4px; transition:opacity .8s ease .45s, transform .8s cubic-bezier(.22,1,.36,1) .45s; }
+  .title.show .t-line { opacity:1; transform:none; }
+  .rule {
+    width:120px; height:1px; background:#b99a5e; margin:20px 0 16px;
+    transform:scaleX(0); transition:transform .9s cubic-bezier(.22,1,.36,1) .65s;
   }
-  .di2-label {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    padding: 0 16px 18px;
-    color: #f5f2ea;
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: 4px;
-    text-align: center;
-    text-shadow: 0 4px 18px rgba(0,0,0,0.9);
-    opacity: 0;
-    z-index: 2;
+  .title.show .rule { transform:scaleX(1); }
+  .sub {
+    font-family:'Inter',system-ui,sans-serif; font-size:11px; font-weight:500;
+    letter-spacing:4px; color:#8d8577;
+    opacity:0; transition:opacity .8s ease .85s;
   }
-  .di2-slide.active .di2-label {
-    animation: di2-labelfade 1s linear forwards;
-  }
-  @keyframes di2-labelfade {
-    0% { opacity: 0; transform: translateY(10px); }
-    15% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  .di2-title {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #0b090a;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    z-index: 5;
-    text-align: center;
-    padding: 0 20px;
-  }
-  .di2-title.show { opacity: 1; }
-  .di2-title h1 {
-    color: #f5f2ea;
-    font-size: 44px;
-    font-weight: 900;
-    letter-spacing: 3px;
-    line-height: 1.15;
-  }
-  .di2-title .di2-rule {
-    width: 0;
-    height: 5px;
-    background: #7a1f2e;
-    margin-top: 18px;
-    transition: width 0.8s ease 0.2s;
-  }
-  .di2-title.show .di2-rule { width: 200px; }
-  .di2-title .di2-sub {
-    color: #8f8a80;
-    font-size: 13px;
-    letter-spacing: 5px;
-    margin-top: 14px;
-    opacity: 0;
-    transition: opacity 0.8s ease 0.6s;
-  }
-  .di2-title.show .di2-sub { opacity: 1; }
+  .title.show .sub { opacity:1; }
 </style>
 </head>
 <body>
-<div class="di2-banner" id="di2banner">
-  <div class="di2-bar"></div>
-  <!-- slides se generan por JS -->
-  <div class="di2-title" id="di2title">
-    <h1>DERECHO<br>INTERNACIONAL&nbsp;II</h1>
-    <div class="di2-rule"></div>
-    <div class="di2-sub">UNIVERSIDAD FERMÍN TORO · SAIA</div>
+<div class="stage" id="stage">
+  <div class="bar"></div>
+  <div class="grade"></div>
+  <div class="grain"></div>
+  <div class="title" id="title">
+    <div class="eyebrow">UNIVERSIDAD FERM&Iacute;N TORO &middot; SAIA</div>
+    <div class="t-line l1">DERECHO</div>
+    <div class="t-line l2">INTERNACIONAL&nbsp;II</div>
+    <div class="rule"></div>
+    <div class="sub">2025 / 02</div>
   </div>
 </div>
 <script>
 (function(){
-  var slides = [
-    {img: 'img/real_ww1.jpg', text: '1914 · LA GRAN GUERRA'},
-    {img: 'img/real_ww2.jpg', text: '1939 · LA SEGUNDA GUERRA'},
-    {img: 'img/real_carta_onu.jpg', text: '1945 · LA CARTA'},
-    {img: 'img/real_onu_asamblea.jpg', text: 'LAS NACIONES UNIDAS'},
-    {img: 'img/real_onu_sede.jpg', text: 'EL ESCENARIO MUNDIAL'},
-    {img: 'img/real_haya.jpg', text: 'LA HAYA'},
-    {img: 'img/real_corte_cij.jpg', text: 'LA CORTE INTERNACIONAL'},
-    {img: 'img/real_iran.jpg', text: 'IRÁN'},
-    {img: 'img/real_venezuela.jpg', text: 'VENEZUELA'}
+  var imgs = [
+    'img/c01_wwi_trinchera.jpg',
+    'img/c02_wwi_somme.jpg',
+    'img/c03_wwi_britanica.jpg',
+    'img/c04_wwii_ruinas.jpg',
+    'img/c05_wwii_stalingrado.jpg',
+    'img/c06_wwii_desembarco.jpg',
+    'img/c07_wwii_iwojima.jpg',
+    'img/c08_golfo_1991.jpg',
+    'img/c09_venezuela_fanb.jpg',
+    'img/c10_venezuela_gnb.jpg',
+    'img/c11_iran_misiles.jpg'
   ];
-  var banner = document.getElementById('di2banner');
-  var title = document.getElementById('di2title');
-  // precargar
-  slides.forEach(function(s){ var im = new Image(); im.src = s.img; });
-  // construir slides
-  var els = slides.map(function(s){
+  var stage = document.getElementById('stage');
+  var title = document.getElementById('title');
+  imgs.forEach(function(s){ var im = new Image(); im.src = s; });
+  var slides = imgs.map(function(s){
     var d = document.createElement('div');
-    d.className = 'di2-slide';
-    d.innerHTML = '<img src="' + s.img + '" alt="">' +
-      '<div class="di2-shade"></div>' +
-      '<div class="di2-label">' + s.text + '</div>';
-    banner.insertBefore(d, title);
+    d.className = 'slide';
+    var im = document.createElement('img');
+    im.src = s; im.alt = '';
+    d.appendChild(im);
+    stage.insertBefore(d, title);
     return d;
   });
-  var i = 0;
+  var MS = 300, i = 0;
   function next(){
-    if (i > 0) els[i-1].classList.remove('active');
-    if (i < els.length) {
-      els[i].classList.add('active');
+    if (i > 0) slides[i-1].classList.remove('on');
+    if (i < slides.length) {
+      var im = slides[i].querySelector('img');
+      im.style.animation = 'none'; void im.offsetWidth; im.style.animation = '';
+      slides[i].classList.add('on');
       i++;
-      setTimeout(next, 1000);
+      setTimeout(next, MS);
     } else {
-      title.classList.add('show');
+      setTimeout(function(){ title.classList.add('show'); }, 250);
     }
   }
   next();
