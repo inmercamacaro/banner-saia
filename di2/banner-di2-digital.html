@@ -31,7 +31,7 @@
   .title {
     position:absolute; inset:0; z-index:25; display:flex; flex-direction:column;
     justify-content:center; align-items:center; text-align:center; padding:0 24px;
-    background:#0d0b0c url('img/d10_zuckerberg.webp') center 42%/cover no-repeat;
+    background:#0d0b0c url('https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d10_zuckerberg.webp') center 42%/cover no-repeat;
     opacity:0; transition:opacity .5s ease;
   }
   .title.show { opacity:1; }
@@ -86,22 +86,22 @@
 <script>
 (function(){
   var imgs = [
-  'img/d01_snowden.webp',
-  'img/d02_nsa_utah.webp',
-  'img/d03_londres_cctv.webp',
-  'img/d04_google_dc.webp',
-  'img/d05_tsmc.webp',
-  'img/d06_mineria.webp',
-  'img/d07_chivo.webp',
-  'img/d08_apple_park.webp',
-  'img/d09_cable_barco.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d01_snowden.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d02_nsa_utah.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d03_londres_cctv.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d04_google_dc.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d05_tsmc.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d06_mineria.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d07_chivo.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d08_apple_park.webp',
+  'https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d09_cable_barco.webp',
   ];
   var stage = document.getElementById('stage');
   var title = document.getElementById('title');
   /* Espera a que las fotos estén descargadas antes de arrancar el montaje */
   var started = false;
   function start(){ if (!started) { started = true; next(); } }
-  var preloadList = imgs.concat(['img/d10_zuckerberg.webp']);
+  var preloadList = imgs.concat(['https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d10_zuckerberg.webp']);
   var pending = preloadList.length;
   function oneDone(){ if (--pending <= 0) start(); }
   preloadList.forEach(function(s){
