@@ -100,6 +100,17 @@
   ];
   var stage = document.getElementById('stage');
   var title = document.getElementById('title');
+
+  var MS = 300, i = 0;
+  var slides = imgs.map(function(s){
+    var d = document.createElement('div');
+    d.className = 'slide';
+    var im = document.createElement('img');
+    im.src = s; im.alt = '';
+    d.appendChild(im);
+    stage.insertBefore(d, title);
+    return d;
+  });
   /* Espera a que las fotos estén descargadas antes de arrancar el montaje */
   var started = false;
   function start(){ if (!started) { started = true; stage.style.visibility='visible'; next(); } }
@@ -114,16 +125,6 @@
     if (im.complete) fin();
   });
   setTimeout(start, 6000); /* seguridad: arranca aunque algo se atasque */
-  var slides = imgs.map(function(s){
-    var d = document.createElement('div');
-    d.className = 'slide';
-    var im = document.createElement('img');
-    im.src = s; im.alt = '';
-    d.appendChild(im);
-    stage.insertBefore(d, title);
-    return d;
-  });
-  var MS = 300, i = 0;
   function next(){
     if (i > 0) slides[i-1].classList.remove('on');
     if (i < slides.length) {
