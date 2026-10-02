@@ -13,19 +13,13 @@
   .stage {
     position:relative; width:100%; max-width:508px; height:0; padding-bottom:56.25%;
     margin:0 auto; overflow:hidden; border-radius:15px; background:#0d0b0c;
+    visibility:hidden;
   }
   .slide { position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; }
   .slide.on { opacity:1; }
   .slide img { width:100%; height:100%; object-fit:cover; display:block; }
   .slide.on img { animation:punch .32s linear forwards; }
   @keyframes punch { from { transform:scale(1.04); } to { transform:scale(1.13); } }
-  .loading {
-    position:absolute; top:50%; left:0; width:100%; margin-top:-8px; z-index:15;
-    text-align:center; font-family:'Inter',system-ui,sans-serif; font-size:10px;
-    font-weight:600; letter-spacing:4px; color:#8a8478; pointer-events:none;
-    animation:pulse 1.2s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100% { opacity:.35; } 50% { opacity:1; } }
   .grade {
     position:absolute; top:0; left:0; width:100%; height:100%; z-index:20; pointer-events:none;
     background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.38) 100%);
@@ -79,7 +73,6 @@
 </head>
 <body>
 <div class="stage" id="stage">
-  <div class="loading" id="loading">CARGANDO</div>
   <div class="grade"></div>
   <div class="grain"></div>
   <div class="title" id="title">
@@ -108,8 +101,7 @@
   var title = document.getElementById('title');
   /* Espera a que las fotos estén descargadas antes de arrancar el montaje */
   var started = false;
-  var loading = document.getElementById('loading');
-  function start(){ if (!started) { started = true; loading.style.display='none'; next(); } }
+  function start(){ if (!started) { started = true; stage.style.visibility='visible'; next(); } }
   var preloadList = imgs.concat(['https://cdn.jsdelivr.net/gh/inmercamacaro/banner-saia@ddb0a9c/di2/img/d10_zuckerberg.webp']);
   var pending = preloadList.length;
   function oneDone(){ if (--pending <= 0) start(); }
